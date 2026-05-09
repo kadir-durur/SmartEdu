@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+    <%- include('partials/navigation') %>
+
+        <div class="container form-container">
+            <div class="card">
+                <h2>Yeni Bir Kurs Oluştur</h2>
+
+                <form method="POST" action="/courses" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Kurs Adı</label>
+                        <input type="text" id="name" name="name" required placeholder="Örn: İleri Seviye Node.js">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Kurs Açıklaması</label>
+                        <textarea id="description" name="description" rows="5" required
+                            placeholder="Bu kursta neler öğreneceğiz?"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="video">Ders Videosu (.mp4)</label>
+                        <input type="file" id="video" name="video" class="form-control-file"
+                            accept="video/mp4,video/x-m4v,video/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Kursu Kaydet</button>
+                </form>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>

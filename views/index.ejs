@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<%- include('partials/navigation') %>
+
+<div class="container hero-section">
+    <h1 class="hero-title">Geleceğini <span>SmartEDU</span> İle İnşa Et.</h1>
+    
+    <p class="hero-subtitle">
+        En iyi eğitmenlerden, en güncel yazılım ve teknoloji kurslarını al. Kariyerine bugün yeni bir yön ver ve potansiyelini keşfet.
+    </p>
+    
+    <div class="hero-buttons">
+        <a href="/courses" class="btn btn-primary">Kursları İncele</a>
+        
+        <% if (!userIN) { %>
+            <a href="/register" class="btn btn-outline">Hemen Kayıt Ol</a>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

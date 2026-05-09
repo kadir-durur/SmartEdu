@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+<%- include('partials/navigation') %>
+
+<div class="container">
+    <h1 class="page-title">Tüm Kurslarımız</h1>
+    
+    <div class="courses-grid">
+        
+        <% courses.forEach(course => { %>
+            <div class="course-card">
+                <h3><%= course.name %></h3>
+                <p><%= course.description.substring(0, 100) %>...</p>
+                
+                <a href="/courses/<%= course.slug %>" class="btn btn-primary w-100" style="text-align: center;">Detayları İncele</a>
+            </div>
+        <% }) %>
+        
+    </div>
+</div>
+
+<%- include('partials/footer') %>

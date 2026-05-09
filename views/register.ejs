@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+<%- include('partials/navigation') %>
+
+<div class="container form-container">
+    <div class="card">
+        <h2>Sisteme Kayıt Ol</h2>
+        
+        <form method="POST" action="/users/signup">
+            <div class="form-group">
+                <label for="name">Adınız Soyadınız</label>
+                <input type="text" id="name" name="name" required placeholder="Örn: Abdulkadir">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-Posta Adresiniz</label>
+                <input type="email" id="email" name="email" required placeholder="ornek@mail.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Şifreniz</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Hesap Türünüz</label>
+                <select id="role" name="role" required>
+                    <option value="student">Öğrenci Hesabı</option>
+                    <option value="teacher">Öğretmen Hesabı</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

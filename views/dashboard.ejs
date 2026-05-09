@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+    <%- include('partials/navigation') %>
+
+        <div class="container">
+            <div class="course-detail-header" style="padding: 40px 20px; margin-bottom: 50px;">
+                <h1>Hoşgeldin, <%= user.name %>
+                </h1>
+                <p style="font-size: 1.2rem; opacity: 0.9;">
+                    Rolünüz: <strong>
+                        <%= user.role==='teacher' ? 'Öğretmen' : 'Öğrenci' %>
+                    </strong>
+                </p>
+            </div>
+
+            <% if (user.role==='student' ) { %>
+                <div class="card">
+                    <h3>Kayıt Olduğum Kurslar</h3>
+                    <hr class="divider">
+                    <% if (user.courses.length> 0) { %>
+                        <div class="courses-grid">
+                           <div class="courses-grid">
+    <% user.courses.forEach(course => { %>
+        
+        <div class="course-card">
+            <!-- 1. Kursun Adı ve Açıklaması -->
+            <h3><%= course.name %></h3>
+            <p><%= course.description.substring(0, 100) %>...</p>
+            
+            <!-- ======================================================= -->
+            <!-- 2. İŞTE YENİ EKLENEN İLERLEME BARI KISMI TAM BURADA -->
+            <!-- Açıklama ile Buton arasına sandviç yaptık! -->
+            <!-- ======================================================= -->
+           <% const isCompleted = user.completedCourses?.some(id => id.toString() === course._id.toString()); %>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <small>İlerleme Durumu</small>
+                    <small><strong><%= isCompleted ? '%100' : '%0' %></strong></small>
+                </div>
+                <div style="background-color: #E5E7EB; border-radius: 10px; height: 10px; width: 100%; overflow: hidden;">
+                    <div style="background-color: #10B981; height: 100%; width: <%= isCompleted ? '100%' : '0%' %>; transition: width 0.5s ease;"></div>
+                </div>
+            </div>
+            <!-- ======================================================= -->
+
+            <!-- 3. İncele Butonu -->
+            <a href="/courses/<%= course.slug %>" class="btn btn-primary w-100" style="margin-top: 10px;">Kursu İncele</a>
+        </div>
+
+    <% }) %>
+</div>
+                        </div>
+                        <% } else { %>
+                            <p>Henüz bir kursa kayıt olmadınız.</p>
+                            <% } %>
+                </div>
+                <% } %>
+
+                    <% if (user.role==='teacher' ) { %>
+                        <h2 style="margin-bottom: 20px; color: var(--text-dark);">Oluşturduğum Kurslar</h2>
+
+                        <% if (courses.length> 0) { %>
+                            <div class="courses-grid">
+                                <% courses.forEach(course=> { %>
+                                    <div class="course-card">
+                                        <h3>
+                                            <%= course.name %>
+                                        </h3>
+                                        <p>
+                                            <%= course.description.substring(0, 100) %>...
+                                        </p>
+
+                                        <div style="display: flex; gap: 10px; align-items: stretch;">
+                                            <a href="/courses/<%= course.slug %>" class="btn btn-primary"
+                                                style="flex: 1; display: flex; align-items: center; justify-content: center;">İncele</a>
+
+                                            <a href="/courses/update/<%= course.slug %>" class="btn btn-warning"
+                                                style="flex: 1; display: flex; align-items: center; justify-content: center;">Düzenle</a>
+
+                                            <form method="POST" action="/courses/<%= course.slug %>?_method=DELETE"
+                                                style="flex: 1; margin: 0; display: flex;">
+                                                <button type="submit" class="btn btn-danger w-100"
+                                                    style="display: flex; align-items: center; justify-content: center;"
+                                                    onclick="return confirm('Bu kursu kalıcı olarak silmek istediğinize emin misiniz?')">Sil</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <% } else { %>
+                                <div class="card">
+                                    <p>Henüz bir kurs oluşturmadınız.</p>
+                                    <a href="/add-course" class="btn btn-primary mt-3">Hemen İlk Kursunu Ekle</a>
+                                </div>
+                                <% } %>
+                                    <% } %>
+
+        </div>
+
+        <%- include('partials/footer') %>

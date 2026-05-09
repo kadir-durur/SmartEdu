@@ -1,0 +1,23 @@
+<nav class="navbar">
+    <div class="container nav-content">
+        <a href="/" class="logo">SmartEDU.</a>
+        
+        <div class="nav-links">
+            <a href="/">Anasayfa</a>
+            <a href="/courses">Kurslar</a>
+            
+            <% if (userIN) { %>
+                <a href="/users/dashboard" class="btn btn-primary" style="margin-right: 10px;">Dashboard</a>
+                
+                <% if (userRole === 'teacher' || userRole === 'admin') { %>
+                    <a href="/add-course">Yeni Kurs Ekle</a>
+                <% } %>
+                
+                <a href="/users/logout" class="btn btn-danger">Çıkış Yap</a>
+            <% } else { %>
+                <a href="/login">Giriş Yap</a>
+                <a href="/register" class="btn btn-primary">Kayıt Ol</a>
+            <% } %>
+        </div>
+    </div>
+</nav>

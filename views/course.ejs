@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+    <%- include('partials/navigation') %>
+
+        <div class="container">
+            <div class="course-detail-header">
+                <h1>
+                    <%= course.name %>
+                </h1>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <span
+                    style="background-color: #F59E0B; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; font-size: 16px;">
+                    ⭐ <%= averageRating> 0 ? averageRating + ' / 5 Ortalama' : 'Henüz Puanlanmadı' %>
+                </span>
+            </div>
+            <% if (course.videoUrl) { %>
+                <div
+                    style="margin-bottom: 30px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <video controls style="width: 100%; max-height: 500px; background-color: #000;">
+                        <source src="<%= course.videoUrl %>" type="video/mp4">
+                        Tarayıcınız video etiketini desteklemiyor.
+                    </video>
+                </div>
+                <% } %>
+
+                    <div class="course-detail-content">
+                        <h3>Kurs Hakkında</h3>
+
+                        <h6 style="color: var(--primary-color); font-weight: 600; margin-bottom: 20px;">
+                            Eğitmen: <%= course.user.name %>
+                        </h6>
+
+                        <hr class="divider">
+
+                        <p>
+                            <%= course.description %>
+                        </p>
+                    </div>
+
+                    <div
+                        style="display: flex; gap: 15px; justify-content: center; align-items: stretch; margin-bottom: 60px;">
+
+                        <a href="/courses" class="btn btn-outline"
+                            style="display: flex; align-items: center; padding: 10px 25px; margin: 0;">
+                            Tüm Kurslara Geri Dön
+                        </a>
+
+                        <% if (userIN && userRole==='student' ) { %>
+                            <form method="POST" action="/courses/enroll" style="margin: 0; display: flex;">
+                                <input type="hidden" name="course_id" value="<%= course._id %>">
+                                <button type="submit" class="btn btn-primary"
+                                    style="padding: 10px 25px; border: none; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                    Bu Kursa Kayıt Ol
+                                </button>
+                            </form>
+
+                            <form method="POST" action="/courses/complete" style="margin: 0; display: flex;">
+                                <input type="hidden" name="course_id" value="<%= course._id %>">
+                                <button type="submit" class="btn btn-success"
+                                    style="padding: 10px 25px; border: none; font-size: 16px; cursor: pointer; background-color: #10B981; color: white;">
+                                    ✓ Dersi Tamamladım
+                                </button>
+                            </form>
+
+
+
+                            <% } %>
+
+
+                    </div>
+        </div>
+
+        <% if (userIN && userRole==='student' ) { %>
+            <div
+                style="max-width: 500px; margin: 0 auto 60px auto; background-color: #F3F4F6; padding: 20px; border-radius: 10px; text-align: center;">
+
+                <h4 style="margin-bottom: 10px;">
+                    <%= userRating ? 'Puanınızı Güncelleyin' : 'Bu Kursu Değerlendir' %>
+                </h4>
+
+                <% if (userRating) { %>
+                    <p style="color: #10B981; font-weight: bold; margin-bottom: 15px;">Mevcut Puanınız: <%= userRating
+                            %> ⭐</p>
+                    <% } %>
+
+                        <form method="POST" action="/courses/rate"
+                            style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                            <input type="hidden" name="course_id" value="<%= course._id %>">
+
+                            <select name="rating" required
+                                style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;">
+                                <option value="" disabled selected>Puan Seçin</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5 Mükemmel)</option>
+                                <option value="4">⭐⭐⭐⭐ (4 Çok İyi)</option>
+                                <option value="3">⭐⭐⭐ (3 İdare Eder)</option>
+                                <option value="2">⭐⭐ (2 Kötü)</option>
+                                <option value="1">⭐ (1 Berbat)</option>
+                            </select>
+
+                            <button type="submit" class="btn btn-warning"
+                                style="padding: 10px 20px; border: none; font-size: 16px; cursor: pointer; color: white;">
+                                <%= userRating ? 'Güncelle' : 'Gönder' %>
+                            </button>
+                        </form>
+            </div>
+            <% } %>
+                </div>
+
+                <%- include('partials/footer') %>
